@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 import { defaultRequestInterceptors, defaultResponseInterceptors } from './config'
 
 import { AxiosInstance, InternalAxiosRequestConfig, RequestConfig, AxiosResponse } from './types'
-import { REQUEST_TIMEOUT } from '~/constants'
+import { REQUEST_TIMEOUT } from '@/constants'
 
 const abortControllerMap: Map<string, AbortController> = new Map()
 

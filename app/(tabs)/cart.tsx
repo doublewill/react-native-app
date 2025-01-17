@@ -3,7 +3,6 @@ import { Dimensions, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, Sta
 
 import React, { useState } from 'react'
 import NumberStepBox from "@/components/number-step-box";
-import { Href, Link } from "expo-router";
 type Props = {}
 import dataJson from '../../data/jd.json'
 type ItemProps = {
@@ -13,8 +12,6 @@ type ItemProps = {
 };
 
 const imageSize = 80;
-
-// target_url
 
 const Item = (item: ItemProps) => (
   <View style={styles.item}>
