@@ -1,25 +1,14 @@
-import { StyleSheet, Text, View, StatusBar, FlatList, Image, TouchableOpacity, SafeAreaView, Linking, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, StatusBar, Pressable, TouchableOpacity, SafeAreaView, Linking, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import { chunk } from '@/utils/lodash'
+import NavSearch from '@/components/nav-search'
+
 type Props = {}
 
-const image = require('~/assets/images/model.jpg')
 import dataJson from '~/data/jd.json'
-
-type SubItemProps = {
-  target_url?: string,
-  onItemPress?: () => void,
-  title: string, price: string, quantity: number, image: string
-};
-
-const imageSize = 60;
+const windowHeight = Dimensions.get('window').height;
 
 const HomeScreen = (props: Props) => {
-  const styleTypes = ['default', 'dark-content', 'light-content'];
-  const [styleStatusBar, setStyleStatusBar] = useState(styleTypes[0]);
-
-  const windowHeight = Dimensions.get('window').height;
-
   const [cartData, setCartData] = useState(chunk(dataJson.data.map((f, index) => {
     return {
       ...f,
@@ -30,6 +19,7 @@ const HomeScreen = (props: Props) => {
       id: index + 1
     }
   }), 2));
+  const [searchText, setSearchText] = useState('');
   const onItemPress = (target_url: string) => {
     if (target_url) {
       Linking.canOpenURL(target_url).then(supported => {
@@ -42,10 +32,15 @@ const HomeScreen = (props: Props) => {
     }
   }
 
+  const onSearch = (item: string) => {
+    // setSearchText(item);
+  }
+
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor="blue" />
-      <View style={{ ...styles.container, maxHeight: windowHeight - 50, overflowY: 'scroll', overflowX: 'hidden' }}>
+      <View style={styles.container}>
+        <NavSearch initialValue={searchText} search={(item) => { onSearch(item) }} />
+
         {
           cartData.map((item, index) => {
             return (
@@ -87,12 +82,13 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    paddingTop: StatusBar.currentHeight,
+    maxHeight: windowHeight - 50,
+    overflow: 'scroll',
   },
   items: {
     flexDirection: "row",
-    marginBottom: 5,
+    marginBottom: 2,
   },
   item: {
     flex: 1,
@@ -112,7 +108,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     resizeMode: 'stretch',
-    margin: 'auto'
   },
   price: {
     color: 'red',

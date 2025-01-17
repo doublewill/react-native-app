@@ -80,10 +80,8 @@ const CartScreen = (props: Props) => {
 
 export default CartScreen
 
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: StatusBar.currentHeight,
   },
   avatar: {
